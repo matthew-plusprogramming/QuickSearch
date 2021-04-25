@@ -25,6 +25,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   console.log('received request');
   console.log(JSON.stringify(req.body));
+
+  res.status(200).send('OK');
 });
 
 app.listen(process.env.PORT, () => {
