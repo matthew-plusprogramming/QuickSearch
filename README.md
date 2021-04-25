@@ -1,2 +1,2 @@
-# QuickSearch
-A publicly accessible autocomplete repository
+# QuickSearch 🔎
+*A publicly accessible autocomplete repository*
