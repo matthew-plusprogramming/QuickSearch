@@ -21,7 +21,10 @@ const addToTrie: (trie: Trie, phraseToAdd: string) => void = (
   saveToDatabase(globalTrie);
 };
 
-const removeFromTrie: (trie: Trie, phraseToRemove: string) => void = (
+const removeFromTrie: (
+  trie: Trie,
+  phraseToRemove: string,
+) => { status: number; success: boolean; message: string } = (
   trie,
   phraseToRemove,
 ) => {
@@ -41,7 +44,7 @@ const removeFromTrie: (trie: Trie, phraseToRemove: string) => void = (
       typeof currentTrie[currentCharacter] === 'undefined' ||
       currentTrie[currentCharacter] === null
     ) {
-      return;
+      return { status: 404, success: false, message: 'Not found' };
     }
 
     // Don't delete any nodes that have other solutions
@@ -69,6 +72,11 @@ const removeFromTrie: (trie: Trie, phraseToRemove: string) => void = (
     }
   }
   saveToDatabase(globalTrie);
+  return {
+    status: 200,
+    success: true,
+    message: 'Deleted from trie successfully',
+  };
 };
 
 export { addToTrie, removeFromTrie };

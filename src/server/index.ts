@@ -71,10 +71,8 @@ app.delete('/delete', (req, res) => {
     return;
   }
 
-  removeFromTrie(globalTrie, keyword);
-  res
-    .status(200)
-    .send({ success: true, message: 'Deleted from trie successfully' });
+  const { status, success, message } = removeFromTrie(globalTrie, keyword);
+  res.status(status).send({ success: success, message: message });
 });
 
 app.listen(process.env.PORT, () => {
