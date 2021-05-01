@@ -84,13 +84,11 @@ app.get('/search', (req, res) => {
   }
 
   const found = searchTrie(globalTrie, keyword);
-  res
-    .status(200)
-    .send({
-      success: true,
-      message: 'Searched trie successfully',
-      found: found,
-    });
+  res.status(200).send({
+    success: true,
+    message: 'Searched trie successfully',
+    found: found,
+  });
 });
 
 app.listen(process.env.PORT, () => {
