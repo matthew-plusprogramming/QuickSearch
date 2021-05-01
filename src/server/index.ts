@@ -14,7 +14,7 @@ dotenv.config();
 
 // Regular imports
 import { globalTrie } from './singletons';
-import { addToTrie, removeFromTrie } from './trieUtility';
+import { addToTrie, removeFromTrie, searchTrie } from './trieUtility';
 import cors from 'cors';
 import express from 'express';
 
@@ -73,6 +73,24 @@ app.delete('/delete', (req, res) => {
 
   const { status, success, message } = removeFromTrie(globalTrie, keyword);
   res.status(status).send({ success: success, message: message });
+});
+app.get('/search', (req, res) => {
+  console.log('Request to search received');
+  const { keyword } = req.body;
+
+  if (typeof keyword === 'undefined' || keyword === null) {
+    res.status(400).send({ success: false, message: 'Must specify keyword' });
+    return;
+  }
+
+  const found = searchTrie(globalTrie, keyword);
+  res
+    .status(200)
+    .send({
+      success: true,
+      message: 'Searched trie successfully',
+      found: found,
+    });
 });
 
 app.listen(process.env.PORT, () => {

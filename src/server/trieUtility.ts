@@ -79,4 +79,28 @@ const removeFromTrie: (
   };
 };
 
-export { addToTrie, removeFromTrie };
+const searchTrie: (trie: Trie, phraseToSearchFor: string) => boolean = (
+  trie,
+  phraseToSearchFor,
+) => {
+  let currentTrie = trie;
+  for (
+    let characterIndex = 0;
+    characterIndex < phraseToSearchFor.length;
+    ++characterIndex
+  ) {
+    // Check if character is present in trie
+    const currentCharacter = phraseToSearchFor[characterIndex];
+    if (
+      typeof currentTrie[currentCharacter] === 'undefined' ||
+      currentTrie[currentCharacter] === null
+    ) {
+      return false;
+    }
+    currentTrie = currentTrie[currentCharacter] as Trie;
+  }
+
+  return currentTrie['**'] === true;
+};
+
+export { addToTrie, removeFromTrie, searchTrie };
