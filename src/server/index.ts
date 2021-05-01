@@ -13,20 +13,76 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Regular imports
+import { initializeDatabase, saveToDatabase } from './dbInterface';
+import { Trie } from './typedefs';
 import cors from 'cors';
 import express from 'express';
+
+// Global state
+const globalTrie = initializeDatabase();
+
+// Utility
+const addToTrie: (trie: Trie, phraseToAdd: string) => void = (
+  trie,
+  phraseToAdd,
+) => {
+  if (phraseToAdd === '') {
+    trie['**'] = true;
+    return;
+  }
+
+  const nextChar = phraseToAdd[0];
+  if (typeof trie[nextChar] === 'undefined' || trie[nextChar] === null) {
+    // Create new trie
+    trie[nextChar] = {};
+  }
+  // Continue traversing
+  addToTrie(trie[nextChar] as Trie, phraseToAdd.substring(1));
+  saveToDatabase(globalTrie);
+};
+
+// ! REMOVE ME BEFORE PRODUCTION. For development purposes only
+const printTrie = () => {
+  console.log(JSON.stringify(globalTrie, undefined, 2));
+};
 
 // REST API
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(
+  (err: Error, _1: any, res: express.Response, next: express.NextFunction) => {
+    // Catch error from express.json()
+    if (err instanceof SyntaxError) {
+      res.status(400).send({ success: false, message: 'Invalid json' });
+      return;
+    }
+    next();
+  },
+);
 
 // ! REMOVE ME BEFORE PRODUCTION. For development purposes only
 app.get('/', (req, res) => {
   console.log('received request');
   console.log(JSON.stringify(req.body));
 
+  printTrie();
   res.status(200).send('OK');
+});
+app.post('/add', (req, res) => {
+  console.log('Request to add received');
+  const { keyword } = req.body;
+
+  // Input validation
+  if (typeof keyword === 'undefined' || keyword === null) {
+    res.status(400).send({ success: false, message: 'Must specify keyword' });
+    return;
+  }
+
+  addToTrie(globalTrie, keyword);
+  res
+    .status(201)
+    .send({ success: true, message: 'Added to trie successfully' });
 });
 
 app.listen(process.env.PORT, () => {
