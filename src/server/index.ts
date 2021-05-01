@@ -83,6 +83,9 @@ const removeFromTrie: (trie: Trie, phraseToRemove: string) => void = (
     // Delete if there are no children
     if (Object.keys(currentTrie).length < 2) {
       delete newTailNode[indexCharacterToDelete];
+    } else {
+      // Just delete ** entry if can't delete node
+      delete currentTrie['**'];
     }
   }
   saveToDatabase(globalTrie);
