@@ -6,7 +6,7 @@ const dbPath = path.join(__dirname, '/../db.json');
 
 const initializeDatabase: () => Trie = () => {
   if (fs.existsSync(dbPath)) {
-    return fs.readFileSync(dbPath).toJSON();
+    return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
   }
   return {};
 };
