@@ -8,7 +8,7 @@
     "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run start\"",
     "test": "mocha"
   },
-  "author": "",
+  "author": "Matthew Lin",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
