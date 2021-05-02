@@ -111,6 +111,15 @@ app.get('/search', (req, res) => {
     found: found,
   });
 });
+app.get('/display', (_1: any, res) => {
+  console.log('Request to display received');
+
+  res.status(200).send({
+    success: true,
+    message: 'Fetched trie successfully',
+    trie: globalTrie,
+  });
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
