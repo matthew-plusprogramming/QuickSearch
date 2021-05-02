@@ -24,4 +24,7 @@ $ npm run dev
 ```
 
 ## CLI Installation
--  ⚠️ Work in progress
+Use the node package manager (npm) to install quicksearch-cli
+```
+npm install quicksearch-cli
+```
