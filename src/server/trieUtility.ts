@@ -21,6 +21,53 @@ const addToTrie: (trie: Trie, phraseToAdd: string) => void = (
   saveToDatabase(globalTrie);
 };
 
+const searchTrieSolutions: (
+  trie: Trie,
+  currentPhrase: string,
+  runningArray: string[],
+) => string[] = (trie, currentPhrase, runningArray) => {
+  if (trie['**'] === true) {
+    runningArray.push(currentPhrase);
+  }
+
+  // Perform a depth first search and find all items
+  Object.keys(trie).forEach((key) => {
+    searchTrieSolutions(trie[key] as Trie, currentPhrase + key, runningArray);
+  });
+
+  return runningArray;
+};
+const autocompleteFromTrie: (
+  trie: Trie,
+  phraseToAutocomplete: string,
+) => string[] = (trie, phraseToAutocomplete) => {
+  let currentTrie = trie;
+
+  for (
+    let characterIndex = 0;
+    characterIndex < phraseToAutocomplete.length;
+    ++characterIndex
+  ) {
+    // Check if character is present in trie
+    const currentCharacter = phraseToAutocomplete[characterIndex];
+    if (
+      typeof currentTrie[currentCharacter] === 'undefined' ||
+      currentTrie[currentCharacter] === null
+    ) {
+      return [];
+    }
+    currentTrie = currentTrie[currentCharacter] as Trie;
+  }
+
+  const autocompleteSuggestions: string[] = [];
+  // Return alphabetized
+  return searchTrieSolutions(
+    currentTrie,
+    phraseToAutocomplete,
+    autocompleteSuggestions,
+  ).sort();
+};
+
 const removeFromTrie: (
   trie: Trie,
   phraseToRemove: string,
@@ -103,4 +150,4 @@ const searchTrie: (trie: Trie, phraseToSearchFor: string) => boolean = (
   return currentTrie['**'] === true;
 };
 
-export { addToTrie, removeFromTrie, searchTrie };
+export { addToTrie, autocompleteFromTrie, removeFromTrie, searchTrie };

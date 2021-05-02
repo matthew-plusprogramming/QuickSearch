@@ -14,7 +14,12 @@ dotenv.config();
 
 // Regular imports
 import { globalTrie } from './singletons';
-import { addToTrie, removeFromTrie, searchTrie } from './trieUtility';
+import {
+  addToTrie,
+  autocompleteFromTrie,
+  removeFromTrie,
+  searchTrie,
+} from './trieUtility';
 import cors from 'cors';
 import express from 'express';
 
@@ -60,6 +65,22 @@ app.post('/add', (req, res) => {
   res
     .status(201)
     .send({ success: true, message: 'Added to trie successfully' });
+});
+app.get('/autocomplete', (req, res) => {
+  console.log('Request to autocomplete received');
+  const { keyword } = req.body;
+
+  if (typeof keyword === 'undefined' || keyword === null) {
+    res.status(400).send({ success: false, message: 'Must specify keyword' });
+    return;
+  }
+
+  const autocompleteSuggestions = autocompleteFromTrie(globalTrie, keyword);
+  res.status(200).send({
+    success: true,
+    message: 'Generated autocomplete suggestions successfully',
+    suggestions: autocompleteSuggestions,
+  });
 });
 app.delete('/delete', (req, res) => {
   console.log('Request to delete received');
