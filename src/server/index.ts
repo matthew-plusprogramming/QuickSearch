@@ -23,11 +23,6 @@ import {
 import cors from 'cors';
 import express from 'express';
 
-// ! REMOVE ME BEFORE PRODUCTION. For development purposes only
-const printTrie = () => {
-  console.log(JSON.stringify(globalTrie, undefined, 2));
-};
-
 // REST API
 const app = express();
 app.use(cors());
@@ -43,14 +38,6 @@ app.use(
   },
 );
 
-// ! REMOVE ME BEFORE PRODUCTION. For development purposes only
-app.get('/', (req, res) => {
-  console.log('received request');
-  console.log(JSON.stringify(req.body));
-
-  printTrie();
-  res.status(200).send('OK');
-});
 app.post('/add', (req, res) => {
   console.log('Request to add received');
   const { keyword } = req.body;
