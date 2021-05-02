@@ -117,6 +117,8 @@ const removeFromTrie: (
       // Just delete ** entry if can't delete node
       delete currentTrie['**'];
     }
+  } else if (currentTrie['**'] !== true) {
+    return { status: 404, success: false, message: 'Not found' };
   }
   saveToDatabase(globalTrie);
   return {
