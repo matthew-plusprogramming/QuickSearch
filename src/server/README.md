@@ -35,6 +35,14 @@ Adds a phrase to the trie
   "keyword": "test"
 }
 ```
+**Request Example**
+```bash
+curl -X POST \
+  -H "Content-type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"keyword":"test"}' \
+  "http://3.21.127.234/add"
+```
 ### Success Response
 **Code**: `200 OK`
 **Example Content**
@@ -74,6 +82,14 @@ Deletes a phrase from the trie
   "keyword": "test"
 }
 ```
+**Request Example**
+```bash
+curl -X DELETE \
+  -H "Content-type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"keyword":"test"}' \
+  "http://3.21.127.234/delete"
+```
 ### Success Response
 **Code**: `200 OK`
 **Example Content**
@@ -112,6 +128,14 @@ Check if an entry exists in trie
 {
   "keyword": "test"
 }
+```
+**Request Example**
+```bash
+curl -X GET \
+  -H "Content-type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"keyword":"test"}' \
+  "http://3.21.127.234/search"
 ```
 ### Success Response
 **Code**: `200 OK`
@@ -153,6 +177,14 @@ Returns a list of autocomplete suggestions
   "keyword": "te"
 }
 ```
+**Request Example**
+```bash
+curl -X GET \
+  -H "Content-type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"keyword":"test"}' \
+  "http://3.21.127.234/autocomplete"
+```
 ### Success Response
 **Code**: `200 OK`
 **Example Content**
@@ -180,6 +212,13 @@ Returns internal JSON representation of trie
 **URL**: `/display/`
 
 **Method**: `GET`
+
+**Request Example**
+```bash
+curl -X GET \
+  -H "Accept: application/json" \
+  "http://3.21.127.234/display"
+```
 
 ### Success Response
 **Code**: `200 OK`
