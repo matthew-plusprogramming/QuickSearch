@@ -8,7 +8,7 @@ This server uses a simple flatfile db for data persistance between instances.
 For usage, install [the cli](#cli-installation).
 
 ## Server Installation
-Clone the repository, then run the following commands in the server directoryto get started
+Clone the repository, then run the following commands in the server directory to get started
 ```bash
 $ npm install
 ```
