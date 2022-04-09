@@ -3,7 +3,7 @@ QuickSearch is a publicly accessible autocomplete and trie server.
 
 It is written in Node and TypeScript, using [the Express web framework](https://expressjs.com/).
 
-This server is hosted on an AWS EC2 instance and is publically accessable at [3.21.127.234](http://3.21.127.234).
+This server is hosted on an AWS EC2 instance and is publically accessable at [18.217.159.242](http://18.217.159.242).
 
 The CLI tool interacts with the server by sending requests to the various endpoints.
 
