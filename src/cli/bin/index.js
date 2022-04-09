@@ -3,7 +3,7 @@
 const axios = require('axios').default;
 const yargs = require('yargs');
 
-const SERVER_URL = 'http://3.21.127.234';
+const SERVER_URL = 'http://18.217.159.242';
 
 // Construct the phrase potentially with spaces
 const constructPhrase = (argv) => {
